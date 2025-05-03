@@ -3,20 +3,21 @@ const { validationResult } = require("express-validator");
 
 const HttpError = require("../models/http-error");
 const getCoordsForAddress = require("../utils/location");
+const Place = require("../models/place");
 
-let DUMMY_PLACES = [
-  {
-    id: "p1",
-    title: "Empire State Building",
-    description: "One of the most famous sky scrapers in the world!",
-    location: {
-      lat: 40.7484474,
-      lng: -73.9871516,
-    },
-    address: "20 W 34th St, New York, NY 10001",
-    creator: "u1",
-  },
-];
+// let DUMMY_PLACES = [
+//   {
+//     id: "p1",
+//     title: "Empire State Building",
+//     description: "One of the most famous sky scrapers in the world!",
+//     location: {
+//       lat: 40.7484474,
+//       lng: -73.9871516,
+//     },
+//     address: "20 W 34th St, New York, NY 10001",
+//     creator: "u1",
+//   },
+// ];
 
 const getPlaceById = (req, res, next) => {
   const placeId = req.params.pid;
@@ -60,16 +61,26 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  const createdPlace = {
-    id: uuidv4(),
+  const createdPlace = new Place({
     title,
     description,
-    location: coordinates,
     address,
+    location: coordinates,
+    image: "https://placehold.co/600x400/png",
     creator,
-  };
+  });
 
-  DUMMY_PLACES.push(createdPlace);
+  // DUMMY_PLACES.push(createdPlace);
+  try {
+    await createdPlace.save();
+  } catch (err) {
+    console.log(err);
+    const error = new HttpError(
+      "Creating place failed, please try again.",
+      500
+    );
+    return next(error);
+  }
 
   res.status(201).json({ place: createdPlace });
 };
