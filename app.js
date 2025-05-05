@@ -1,5 +1,6 @@
 const express = require("express");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 const mongoose = require("mongoose");
 
 const placesRoutes = require("./routes/places-routes");
@@ -8,6 +9,11 @@ const HttpError = require("./models/http-error");
 
 const app = express();
 
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
 app.use(bodyParser.json());
 
 app.use("/api/places", placesRoutes);
@@ -29,7 +35,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://mernadmin:mernpass@cluster0.iz9hhbz.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"
+    "mongodb+srv://mernadmin:mernpass@cluster0.iz9hhbz.mongodb.net/mern?retryWrites=true&w=majority&appName=Cluster0"
   )
   .then(() => {
     app.listen(5000);
