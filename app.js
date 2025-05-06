@@ -3,6 +3,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const path = require("path");
 
 const placesRoutes = require("./routes/places-routes");
 const usersRoutes = require("./routes/users-routes");
@@ -16,6 +17,7 @@ app.use(
   })
 );
 app.use(bodyParser.json());
+app.use("/uploads/images", express.static(path.join("uploads", "images")));
 
 app.use("/api/places", placesRoutes);
 app.use("/api/users", usersRoutes);
