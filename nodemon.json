@@ -4,6 +4,7 @@
     "DB_PASSWORD": "mernpass",
     "DB_NAME": "mern",
     "MAPBOX_API_KEY": "68148efa16fb3581750791bgudd0594",
-    "JWT_KEY": "supersecret_dont_share"
+    "JWT_KEY": "supersecret_dont_share",
+    "CLIENT_URL": "http://localhost:3000"
   }
 }
