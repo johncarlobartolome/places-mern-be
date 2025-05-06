@@ -44,7 +44,7 @@ app.use((error, req, res, next) => {
 
 mongoose
   .connect(
-    "mongodb+srv://mernadmin:mernpass@cluster0.iz9hhbz.mongodb.net/mern?retryWrites=true&w=majority&appName=Cluster0"
+    `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.iz9hhbz.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority&appName=Cluster0`
   )
   .then(() => {
     app.listen(5000);
